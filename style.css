@@ -1,0 +1,61 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+.wrapper {
+    display: flex;
+    background-color: rgb(202, 200, 200);
+    width: 100%;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    position:fixed;
+    top: 0px;
+    width: 100%;
+    justify-content: center;
+    color: black;
+    text-align: center;
+    font-size: 22px;
+}
+
+.canvasContainer {
+    display: flex;
+    position: relative;
+    margin-top: 10%;
+    margin-left: 40%;
+    height: 350px;
+    width: 350px;    
+    background-color: aqua;
+}
+
+.controlPannel {
+    display: flex;
+    position:fixed;
+    margin-top: 10%;
+    margin-left: 7%;
+    margin-right: 7%;
+    margin-bottom: 10%;
+    margin-right: 65%;
+    height: 350px;
+    width: 130px;  
+    background-color: rgb(228, 189, 130);
+}
+
+.footer {
+    background-color: rgb(238, 238, 238);
+    padding-top: 3px;
+    padding-bottom: 3px;
+    color:#6f6b67;
+    display: flex;
+    position:fixed;
+    font-size: 14px;
+    justify-content: center;
+    bottom: 0px;
+    width: 100%;
+}

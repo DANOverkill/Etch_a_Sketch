@@ -25,17 +25,17 @@ html, body {
 }
 
 .canvasContainer {
-    display: flex;
+    display: grid;
     position: relative;
     margin-top: 10%;
     margin-left: 40%;
     height: 350px;
     width: 350px;    
-    background-color: aqua;
+    background-color: rgb(184, 243, 243);
 }
 
 .controlPannel {
-    display: flex;
+    display: grid;
     position:fixed;
     margin-top: 10%;
     margin-left: 7%;
@@ -45,6 +45,13 @@ html, body {
     height: 350px;
     width: 130px;  
     background-color: rgb(228, 189, 130);
+}
+
+.pannelButton {
+    background-color: chocolate;
+    margin: 5%;
+    border-style: solid;
+    border-color: rgb(102, 63, 35);
 }
 
 .footer {

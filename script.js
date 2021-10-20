@@ -53,7 +53,7 @@ document.querySelectorAll('.canvasPixel').forEach(item => {
 }
 
 resolutionButton.addEventListener('click', function() {
-    resolution = parseInt(prompt('please choose resolution up to a max of 100 pixels', 16));
+    resolution = parseInt(prompt('Please choose resolution up to a max of 64 pixels', 16));
     console.log(resolution);
     if (resolution > 64) {
         resolution = 64;

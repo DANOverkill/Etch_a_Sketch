@@ -3,7 +3,8 @@ const container = document.querySelector('.canvasContainer');
 const canvasPixel = document.querySelector('.cavasPixel');
 const resetButton = document.querySelector('#resetButton');
 const resolutionButton = document.querySelector('#resButton');
-
+const brushColorButton = document.querySelector('#brushColorButton');
+const eraserButton = document.querySelector('#eraser');
 
 // Global Variables
 let pixelStyle = {
@@ -11,13 +12,12 @@ let pixelStyle = {
     'transition': '0.5s'
 };
 
+//Logic
 let resolution = 16;
 setCanvasresolution(resolution);
 appendPixels(resolution);
-paintPixel();
+paintPixel('black');
 
-
-//Logic
 function setCanvasresolution(resolution) {
     let canvasStyle = {
         'grid-template-columns' :`repeat(${resolution}, auto)`,
@@ -41,16 +41,34 @@ function appendPixels(resolution) {
     }
 };
 
-function paintPixel() {
-document.querySelectorAll('.canvasPixel').forEach(item => {
-    item.addEventListener('mouseover', function() {
-          let hoverColor =  {
-        'background-color': 'black'
-        };
-        Object.assign(this.style, hoverColor);
+function paintPixel(brushColors) {
+    document.querySelectorAll('.canvasPixel').forEach(item => {
+        item.addEventListener('mouseover', function() {
+            let hoverColor =  {
+            'background-color': `${brushColors}`
+            };
+            Object.assign(this.style, hoverColor);
+        })
     })
-  })
 }
+
+function changeColor() {
+    colorChoice = document.getElementById('#inputColor');
+    colorChoice.addEventListener("change", watchColorPicker, false);
+    console.log(colorChoice.value);
+    return colorChoice;
+}
+
+function pickEraser() {
+    document.querySelectorAll('.canvasPixel').forEach(item => {
+        item.addEventListener('mouseover', function() {
+            let hoverColor =  {
+            'background-color': 'white'
+            };
+            Object.assign(this.style, hoverColor);
+        })
+      })
+    }
 
 resolutionButton.addEventListener('click', function() {
     resolution = parseInt(prompt('Please choose resolution up to a max of 64 pixels', 16));
@@ -61,31 +79,28 @@ resolutionButton.addEventListener('click', function() {
     if (resolution === 0) {
         resolution = 16;
     }
-    if (resolution === NaN || resolution === null) {
+    if (resolution === NaN || resolution === null) { //This exception isn't working
         resolution = 16;
     }
     container.innerHTML = '';
     console.log(resolution);
     setCanvasresolution(resolution);
     appendPixels(resolution);
-    paintPixel();
+    paintPixel('black');
 });
 
 resetButton.addEventListener('click', function() {
     container.innerHTML = '';
     setCanvasresolution(resolution);
     appendPixels(resolution);
-    paintPixel();
+    paintPixel('black');
 });
 
+brushColorButton.addEventListener('click', function() {
+    brushColors = prompt('pick colour', 'black');
+    paintPixel(brushColors);
+})
 
-
-
-// let canvas = container.querySelectorAll('.canvasPixel')
-//     let resetColor =  {
-//         'background-color': 'white'
-//         };
-//     for (let i = 0; i < canvas.length; i++) {
-//         let pixel = canvas[i];
-//         Object.assign(pixel[i].style, resetColor);
-//     }
+eraserButton.addEventListener('click', function() {
+    pickEraser();
+})

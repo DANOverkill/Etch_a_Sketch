@@ -51,10 +51,22 @@ html, body {
 
 .pannelButton {
     background-color: chocolate;
-    margin: 5%;
+    margin: .3em;
+    height: 85%;
+    width: 90%;
     border-style: solid;
     border-color: rgb(102, 63, 35);
 }
+
+.inputColor {
+    position:absolute;
+    top: 116px;
+    left: 0;
+    height: 59px;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
 
 .footer {
     background-color: rgb(238, 238, 238);

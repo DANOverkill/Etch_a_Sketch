@@ -92,7 +92,7 @@ function pickEraser() {
       })
     }
 
-function toggleMode() {
+function toggleMode() { //toggleMode is not working
     let onClick = true;
     if (onClick === true) {
         paintPixel(brushColors);

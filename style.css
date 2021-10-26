@@ -55,7 +55,19 @@ html, body {
     height: 85%;
     width: 90%;
     border-style: solid;
+    border-radius: 2px;
     border-color: rgb(102, 63, 35);
+    cursor: pointer;
+}
+
+.pannelButtonPressed {
+    background-color: rgb(151, 75, 20);
+    margin: .3em;
+    height: 85%;
+    width: 90%;
+    border-style: solid;
+    border-color: rgb(102, 63, 35);
+    cursor: pointer;
 }
 
 .inputColor {

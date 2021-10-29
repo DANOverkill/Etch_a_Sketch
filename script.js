@@ -3,7 +3,8 @@ const container = document.querySelector('.canvasContainer');
 const canvasPixel = document.querySelector('.cavasPixel');
 const resetButton = document.querySelector('#resetButton');
 const resolutionButton = document.querySelector('#resButton');
-const brushColorButton = document.querySelector('#brushColorButton');
+const brushButton = document.querySelector('#brushButton');
+// const rainbowBrushButton = document.querySelector('#rainbowButton');
 const eraserButton = document.querySelector('#eraser');
 const etchOrSketch = document.querySelector('#etchOrSketch');
 let brushColorChoice = document.getElementById('colorPicker');
@@ -23,7 +24,7 @@ let onClick = true;
 setCanvasresolution(resolution);
 appendPixels(resolution);
 clickToPaint(brushColors)
-brushColorButton.classList.add('pannelButtonPressed');
+brushButton.classList.add('pannelButtonPressed');
 
 function setCanvasresolution(resolution) {
     let canvasStyle = {
@@ -122,6 +123,16 @@ function changeColor() {
     clickToPaint(brushColors)
 };
 
+function randomColor() {
+    brushColors = `rgb(${randomRgbValue()}, ${randomRgbValue()}, ${randomRgbValue()})`;
+    return brushColors;
+};
+
+function randomRgbValue() {
+    let value = `${Math.floor(Math.random() * 255)}`;
+    return value;
+};
+
 // Control Pannel Buttons
 resolutionButton.addEventListener('click', function() {
     resolution = parseInt(prompt('Please choose resolution up to a max of 100 pixels', 16));
@@ -132,9 +143,7 @@ resolutionButton.addEventListener('click', function() {
     if (resolution === 0) {
         resolution = 16;
     }
-    if (resolution === NaN || resolution === null) { //This exception isn't working
-        resolution = 16;
-    }
+    if (isNaN(resolution)) {resolution = 16;} 
     container.innerHTML = '';
     console.log(resolution);
     setCanvasresolution(resolution);
@@ -150,16 +159,25 @@ resetButton.addEventListener('click', function() {
     clickToPaint(brushColors);
 });
 
-brushColorButton.addEventListener('click', function() {
+brushButton.addEventListener('click', function() {
     let brushColors = brushColorChoice.value;
     clickToPaint(brushColors);
-    brushColorButton.classList.add('pannelButtonPressed');
+    brushButton.classList.add('pannelButtonPressed');
     eraserButton.classList.remove('pannelButtonPressed');
+    // rainbowBrushButton.classList.remove('pannelButtonPressed');
+
 })
 
 eraserButton.addEventListener('click', function() {
     pickEraser();
     eraserButton.classList.add('pannelButtonPressed');
-    brushColorButton.classList.remove('pannelButtonPressed');
+    brushButton.classList.remove('pannelButtonPressed');
+    // rainbowBrushButton.classList.remove('pannelButtonPressed');
 })
 
+// rainbowBrushButton.addEventListener('click', function() {
+//     rainbowBrush();
+//     rainbowBrushButton.classList.add('pannelButtonPressed');
+//     eraserButton.classList.remove('pannelButtonPressed');
+//     brushButton.classList.remove('pannelButtonPressed')
+// })

@@ -1,3 +1,8 @@
-This will be an Etch a Sketch project for The Odin Project. 
-I've learner how to successfully add muitiple Div elements in a dynamic way. 
-I''ve learned how to apply a event listener with a mouse over effect that individually alters the background color to each of the dynamically added divs. This was done with a forEach loop once calling the divs with a document.querySelectorAll. 
+-This will be an Etch a Sketch project for The Odin Project. 
+-I've learner how to successfully add muitiple Div elements in a dynamic way. 
+-I''ve learned how to apply a event listener with a mouse over effect that individually alters the background color to each of the dynamically added div. This was done with a forEach loop once calling the divs with a document.querySelectorAll. 
+-I have successfully added a color picker that applies the picked color to the brush - that color is maintained even if you switch to your eraser and back to your brush.
+-I have added a click to hover system where the brush will pain the div on click but also paint the divs you hover over while maintaining the mouse click. 
+-I have not been able to successfully inplement a way to switch between hover mode and click to paint mode.
+-I have not been able to make the app usable on mobile devices or cintiqs/wacom tablets. 
+-I have not been able to come up with a rainbow mode for the brush - a function that generates random rgb values is working, but i have not been able to add a function for a brush that uses that randomly generated colour. 

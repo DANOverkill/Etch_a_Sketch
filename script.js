@@ -151,14 +151,3 @@ eraserButton.addEventListener('click', function() {
     brushColorButton.classList.remove('pannelButtonPressed');
 })
 
-
-
-
-// document.getElementById('#colorPicker').onchange = function() {
-//     brushColorChoice = this.value;
-//     console.log(brushColorChoice);
-//   }
-
-// etchOrSketch.addEventListener('click', function(){
-//   toggleMode();
-// })

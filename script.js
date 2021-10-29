@@ -61,6 +61,12 @@ function clickToPaint (brushColors) {
             Object.assign(this.style, hoverColor);
             }
         })
+        item.addEventListener('click', function() {
+            let hoverColor =  {
+            'background-color': `${brushColors}`
+            };
+            Object.assign(this.style, hoverColor);
+        })
     })
     return onClick = true;
 }
@@ -89,6 +95,12 @@ function pickEraser() {
             if(mouseIsDown) {
             Object.assign(this.style, hoverColor);
             }
+        })
+        item.addEventListener('click', function() {
+            let hoverColor =  {
+            'background-color': 'white'
+            };
+            Object.assign(this.style, hoverColor);
         })
       })
     }

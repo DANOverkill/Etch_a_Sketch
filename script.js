@@ -6,6 +6,8 @@ const resolutionButton = document.querySelector('#resButton');
 const brushColorButton = document.querySelector('#brushColorButton');
 const eraserButton = document.querySelector('#eraser');
 const etchOrSketch = document.querySelector('#etchOrSketch');
+let brushColorChoice = document.getElementById('colorPicker');
+
 
 // Global Variables
 let pixelStyle = {
@@ -18,7 +20,6 @@ let resolution = 16;
 let onClick = true;
 
 //Logic
-
 setCanvasresolution(resolution);
 appendPixels(resolution);
 clickToPaint(brushColors)
@@ -104,7 +105,12 @@ function toggleMode() { //toggleMode is not working
     }
 };
 
-// Event Listners
+function changeColor() {
+    let brushColors = brushColorChoice.value;
+    clickToPaint(brushColors)
+};
+
+// Control Pannel Buttons
 resolutionButton.addEventListener('click', function() {
     resolution = parseInt(prompt('Please choose resolution up to a max of 100 pixels', 16));
     console.log(resolution);
@@ -128,11 +134,12 @@ resetButton.addEventListener('click', function() {
     container.innerHTML = '';
     setCanvasresolution(resolution);
     appendPixels(resolution);
+    document.getElementById('colorPicker').value = '#000000';
     clickToPaint(brushColors);
 });
 
 brushColorButton.addEventListener('click', function() {
-    brushColors = prompt('pick colour', 'black');
+    let brushColors = brushColorChoice.value;
     clickToPaint(brushColors);
     brushColorButton.classList.add('pannelButtonPressed');
     eraserButton.classList.remove('pannelButtonPressed');
@@ -143,6 +150,14 @@ eraserButton.addEventListener('click', function() {
     eraserButton.classList.add('pannelButtonPressed');
     brushColorButton.classList.remove('pannelButtonPressed');
 })
+
+
+
+
+// document.getElementById('#colorPicker').onchange = function() {
+//     brushColorChoice = this.value;
+//     console.log(brushColorChoice);
+//   }
 
 // etchOrSketch.addEventListener('click', function(){
 //   toggleMode();

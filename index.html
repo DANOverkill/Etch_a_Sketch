@@ -11,9 +11,12 @@
   <div class="wrapper">
     <div class="header">Dan-Etch-a-Sketch</div>
     <div class="controlPannel">
-      <div id="resButton" class="pannelButton">Resolution</div>
-      <div id="brushColorButton" class="pannelButton">Brush Color</div>
+      <div id="colorPickerArea"> Bursh Color
+        <input type="color" id="colorPicker" value="#000000" onchange="changeColor()">
+      </div>
+      <div id="brushColorButton" class="pannelButton">Brush</div>
       <div id="eraser" class="pannelButton">Eraser</div>
+      <div id="resButton" class="pannelButton">Resolution</div>
       <div id="etchOrSketch" class="pannelButton">Button 4</div>
       <div class="pannelButton">Button 5</div>
       <div class="pannelButton" id="resetButton">Reset</div>

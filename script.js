@@ -23,7 +23,7 @@ let onClick = true;
 //Logic
 setCanvasresolution(resolution);
 appendPixels(resolution);
-clickToPaint(brushColors)
+clickToPaint(brushColors, onClick)
 brushButton.classList.add('pannelButtonPressed');
 
 function setCanvasresolution(resolution) {
@@ -49,7 +49,9 @@ function appendPixels(resolution) {
     }
 };
 
-function clickToPaint (brushColors) {
+function clickToPaint (brushColors, onClick) {
+    if (onClick === false) { return;}
+    else {
     let mouseIsDown = false
     container.addEventListener('mousedown', function(){mouseIsDown = true})
     container.addEventListener('mouseup', function(){mouseIsDown = false})
@@ -69,10 +71,12 @@ function clickToPaint (brushColors) {
             Object.assign(this.style, hoverColor);
         })
     })
-    return onClick = true;
+    }
 }
 
-function paintPixel(brushColors) {
+function paintPixel(brushColors, onClick) {
+    if (onClick === true) { return;}
+    else {
     document.querySelectorAll('.canvasPixel').forEach(item => {
         item.addEventListener('mouseover', function() {
             let hoverColor =  {
@@ -81,7 +85,7 @@ function paintPixel(brushColors) {
             Object.assign(this.style, hoverColor);
         })
     })
-    return onClick = false;
+    }
 }
 
 function pickEraser() {
@@ -107,14 +111,14 @@ function pickEraser() {
     }
 
 function toggleMode() { //toggleMode is not working
-    let onClick = true;
     if (onClick === true) {
-        paintPixel(brushColors);
-        etchOrSketch.innerHTML = 'Etch-a-Sketch'; 
+        etchOrSketch.innerHTML = 'Etch-a-Sketch';
+        return onClick = false;
 
     } else if (onClick === false) {
-        clickToPaint(brushColors);
         etchOrSketch.innerHTML = 'Click to Draw';
+        return onClick = true;
+
     }
 };
 
@@ -169,10 +173,12 @@ resolutionButton.addEventListener('click', function() {
     }
     if (isNaN(resolution)) {resolution = 16;} 
     container.innerHTML = '';
+    document.getElementById('colorPicker').value = '#000000';
     console.log(resolution);
     setCanvasresolution(resolution);
     appendPixels(resolution);
-    clickToPaint(brushColors);
+    clickToPaint('black', onClick);
+    paintPixel('black', onClick);
 });
 
 resetButton.addEventListener('click', function() {
@@ -180,12 +186,17 @@ resetButton.addEventListener('click', function() {
     setCanvasresolution(resolution);
     appendPixels(resolution);
     document.getElementById('colorPicker').value = '#000000';
-    clickToPaint(brushColors);
+    clickToPaint('black', onClick);
+    paintPixel('black', onClick);
+    brushButton.classList.add('pannelButtonPressed');
+    eraserButton.classList.remove('pannelButtonPressed');
+    rainbowBrushButton.classList.remove('pannelButtonPressed');
 });
 
 brushButton.addEventListener('click', function() {
     let brushColors = brushColorChoice.value;
-    clickToPaint(brushColors);
+    clickToPaint(brushColors, onClick);
+    paintPixel(brushColors, onClick);
     brushButton.classList.add('pannelButtonPressed');
     eraserButton.classList.remove('pannelButtonPressed');
     rainbowBrushButton.classList.remove('pannelButtonPressed');
@@ -205,3 +216,10 @@ rainbowBrushButton.addEventListener('click', function() {
     eraserButton.classList.remove('pannelButtonPressed');
     brushButton.classList.remove('pannelButtonPressed')
 })
+
+// etchOrSketch.addEventListener('click', function() {
+//     toggleMode();
+//     clickToPaint(brushColors, onClick);
+//     paintPixel(brushColors, onClick);
+//     console.log(onClick);
+// })

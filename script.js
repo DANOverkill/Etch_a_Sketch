@@ -9,7 +9,6 @@ const eraserButton = document.querySelector('#eraser');
 const eyeDropper = document.querySelector('#eyeDropper');
 const brushColorChoice = document.getElementById('colorPicker');
 
-
 // Global Variables
 let pixelStyle = {
     'background-color': 'rgb(255, 255, 255)',
@@ -147,16 +146,31 @@ function rainbowBrush() {
     }
 
     function eyeDrop() {
-        document.querySelectorAll('canvaPixel').forEach(function() {
-            this.addEventListener('click', function() {
-                let color = Object.style.backgroundColor;
-                brushColorChoice.value = color;
+        document.querySelectorAll('.canvasPixel').forEach(item => {
+            item.addEventListener('mouseover', function() {
+                rgbColor = this.style.backgroundColor;
+                console.log(String(rgb2hex(rgbColor)));
+                document.getElementById('colorPicker').value = String(rgb2hex(rgbColor));
+                })
+        })
+        document.querySelectorAll('.cavasPixel').forEach(item => {
+            item.addEventListener('click', () => {
+                clickToPaint(brushColor);
                 brushButton.classList.add('pannelButtonPressed');
+                eraserButton.classList.remove('pannelButtonPressed');
+                rainbowBrushButton.classList.remove('pannelButtonPressed');
                 eyeDropper.classList.remove('pannelButtonPressed');
-                return clickToPaint(color);
             })
         })
     }
+    
+    function rgb2hex (rgb) {
+       hexcolor = `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+                                    .slice(1).map(n => parseInt(n, 10)
+                                    .toString(16).padStart(2, '0'))
+                                    .join('')}`;
+        return hexcolor;
+    } 
 
 // Control Pannel Buttons
 resolutionButton.addEventListener('click', function() {
@@ -221,6 +235,7 @@ rainbowBrushButton.addEventListener('click', function() {
 
 eyeDropper.addEventListener('click', () => {
     eyeDrop();
+    rainbowBrush(0);
     eyeDropper.classList.add('pannelButtonPressed');
     brushButton.classList.remove('pannelButtonPressed');
     eraserButton.classList.remove('pannelButtonPressed');

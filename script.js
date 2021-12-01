@@ -127,7 +127,7 @@ function paintPixel(brushColor) {                                   //this funct
 
 function changeColor() {
     let brushColor = brushColorChoice.value;
-    toolsFunction('brush', brushColor),
+    toolsFunction('brush', `${brushColorChoice.value}`),
     resetButtonsDisplay();
     brushButton.classList.add('pannelButtonPressed');
 };

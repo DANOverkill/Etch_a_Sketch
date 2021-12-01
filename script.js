@@ -14,14 +14,14 @@ let pixelStyle = {
     'background-color': 'rgb(255, 255, 255)',
     'transition': '0.35s'
 };
+let brushColor = brushColorChoice.value;
+let resolution = 32;
+let mode = 'brush';
 
-let brushColor = '#000000';
-let resolution = 16;
-
-//Logic
+//Page Loding Logic 
 setCanvasresolution(resolution);
 appendPixels(resolution);
-clickToPaint(brushColor)
+toolsFunction('brush', '#000000');
 brushButton.classList.add('pannelButtonPressed');
 
 function setCanvasresolution(resolution) {
@@ -47,20 +47,76 @@ function appendPixels(resolution) {
     }
 };
 
-function clickToPaint(brushColor) {
+//Functionality Logic
+function toolsFunction(mode, brushColor) {
     let mouseIsDown = false
     container.addEventListener('mousedown', function(){mouseIsDown = true})
     container.addEventListener('mouseup', function(){mouseIsDown = false})
     document.querySelectorAll('.canvasPixel').forEach(item => {
         item.addEventListener('mouseover', function() {
-            let hoverColor =  {
-            'background-color': `${brushColor}`
-            };
-            if(mouseIsDown) {
-            Object.assign(this.style, hoverColor);
+            if(mode === 'brush') {
+                let hoverColor =  {
+                'background-color': `${brushColor}`
+                };
+                if(mouseIsDown) {
+                Object.assign(this.style, hoverColor);
+                }
+            }
+            if(mode === 'eraser') {
+                let hoverColor =  {
+                'background-color': '#ffffff'
+                };
+                if(mouseIsDown) {
+                Object.assign(this.style, hoverColor);
+                }
+            }
+            if(mode === 'rainbow') {
+                let rainbow = randomColor();
+                let hoverColor =  {
+                'background-color': `${rainbow}`
+                };
+                if(mouseIsDown) {
+                Object.assign(this.style, hoverColor);
+                }
+            }
+            if(mode === 'eyeDropper') {
+                rgbColor = this.style.backgroundColor;
+                document.getElementById('colorPicker').value = String(rgb2hex(rgbColor));
             }
         })
         item.addEventListener('click', function() {
+            if(mode === 'brush') {
+                let hoverColor =  {
+                'background-color': `${brushColorChoice.value}`
+                };
+                Object.assign(this.style, hoverColor);
+            }
+            if(mode === 'eraser') {
+                let hoverColor =  {
+                'background-color': `${brushColorChoice.value}`
+                };
+                Object.assign(this.style, hoverColor);
+            }
+            if(mode === 'rainbow') {
+                let rainbow = randomColor();
+                let hoverColor =  {
+                'background-color': `${brushColorChoice.value}`
+                };
+                Object.assign(this.style, hoverColor);
+            }
+            if(mode === 'eyeDropper') {
+                brushColor = brushColorChoice.value;
+                resetButtonsDisplay();
+                brushButton.classList.add('pannelButtonPressed');
+                return mode = 'brush';
+            }
+        })
+    })
+}
+
+function paintPixel(brushColor) {                                   //this function is curently not being used 
+    document.querySelectorAll('.canvasPixel').forEach(item => {     //I'm keeping is here since it was the original 
+        item.addEventListener('mouseover', function() {             //purpouse of this project
             let hoverColor =  {
             'background-color': `${brushColor}`
             };
@@ -68,47 +124,12 @@ function clickToPaint(brushColor) {
         })
     })
 }
-
-function paintPixel(brushColor) {  //this function is curently not being used
-    document.querySelectorAll('.canvasPixel').forEach(item => {
-        item.addEventListener('mouseover', function() {
-            let hoverColor =  {
-            'background-color': `${brushColor}`
-            };
-            Object.assign(this.style, hoverColor);
-        })
-    })
-}
-
-function pickEraser() {
-    let mouseIsDown = false
-    container.addEventListener('mousedown', function(){mouseIsDown = true})
-    container.addEventListener('mouseup', function(){mouseIsDown = false})
-    document.querySelectorAll('.canvasPixel').forEach(item => {
-        item.addEventListener('mouseover', function() {
-            let hoverColor =  {
-            'background-color': '#ffffff'
-            };
-            if(mouseIsDown) {
-            Object.assign(this.style, hoverColor);
-            }
-        })
-        item.addEventListener('click', function() {
-            let hoverColor =  {
-            'background-color': '#ffffff'
-            };
-            Object.assign(this.style, hoverColor);
-        })
-      })
-    }
 
 function changeColor() {
     let brushColor = brushColorChoice.value;
-    clickToPaint(brushColor)
+    toolsFunction('brush', brushColor),
+    resetButtonsDisplay();
     brushButton.classList.add('pannelButtonPressed');
-    eraserButton.classList.remove('pannelButtonPressed');
-    rainbowBrushButton.classList.remove('pannelButtonPressed');
-    eyeDropper.classList.remove('pannelButtonPressed');
 };
 
 function randomColor() {
@@ -120,57 +141,21 @@ function randomRgbValue() {
     let value = `${Math.floor(Math.random() * 255)}`;
     return value;
 };
-
-function rainbowBrush() {
-    let mouseIsDown = false
-    container.addEventListener('mousedown', function(){mouseIsDown = true})
-    container.addEventListener('mouseup', function(){mouseIsDown = false})
-    document.querySelectorAll('.canvasPixel').forEach(item => {
-        item.addEventListener('mouseover', function() {
-            let rainbow = randomColor();
-            let hoverColor =  {
-            'background-color': `${rainbow}`
-            };
-            if(mouseIsDown) {
-            Object.assign(this.style, hoverColor);
-            }
-        })
-        item.addEventListener('click', function() {
-            let rainbow = randomColor();
-            let hoverColor =  {
-            'background-color': `${rainbow}`
-            };
-            Object.assign(this.style, hoverColor);
-        })
-      })
-    }
-
-    function eyeDrop() {
-        document.querySelectorAll('.canvasPixel').forEach(item => {
-            item.addEventListener('mouseover', function() {
-                rgbColor = this.style.backgroundColor;
-                console.log(String(rgb2hex(rgbColor)));
-                document.getElementById('colorPicker').value = String(rgb2hex(rgbColor));
-                })
-        })
-        document.querySelectorAll('.cavasPixel').forEach(item => {
-            item.addEventListener('click', () => {
-                clickToPaint(brushColor);
-                brushButton.classList.add('pannelButtonPressed');
-                eraserButton.classList.remove('pannelButtonPressed');
-                rainbowBrushButton.classList.remove('pannelButtonPressed');
-                eyeDropper.classList.remove('pannelButtonPressed');
-            })
-        })
-    }
     
-    function rgb2hex (rgb) {
-       hexcolor = `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
-                                    .slice(1).map(n => parseInt(n, 10)
-                                    .toString(16).padStart(2, '0'))
-                                    .join('')}`;
-        return hexcolor;
-    } 
+function rgb2hex (rgb) {
+    hexcolor = `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+                                .slice(1).map(n => parseInt(n, 10)
+                                .toString(16).padStart(2, '0'))
+                                .join('')}`;
+    return hexcolor;
+}
+
+function resetButtonsDisplay() {
+    brushButton.classList.remove('pannelButtonPressed');
+    eraserButton.classList.remove('pannelButtonPressed');
+    rainbowBrushButton.classList.remove('pannelButtonPressed');
+    eyeDropper.classList.remove('pannelButtonPressed');
+}
 
 // Control Pannel Buttons
 resolutionButton.addEventListener('click', function() {
@@ -180,19 +165,19 @@ resolutionButton.addEventListener('click', function() {
         resolution = 100;
     }
     if (resolution === 0) {
-        resolution = 16;
+        resolution = 32;
     }
-    if (isNaN(resolution)) {resolution = 16;} 
+    if (isNaN(resolution)) {
+        resolution = 32;
+    } 
     container.innerHTML = '';
     document.getElementById('colorPicker').value = '#000000';
     console.log(resolution);
     setCanvasresolution(resolution);
     appendPixels(resolution);
-    clickToPaint('#000000');
+    toolsFunction('brush', '#000000');
+    resetButtonsDisplay();
     brushButton.classList.add('pannelButtonPressed');
-    eraserButton.classList.remove('pannelButtonPressed');
-    rainbowBrushButton.classList.remove('pannelButtonPressed');
-    eyeDropper.classList.remove('pannelButtonPressed');
 });
 
 resetButton.addEventListener('click', function() {
@@ -200,44 +185,37 @@ resetButton.addEventListener('click', function() {
     setCanvasresolution(resolution);
     appendPixels(resolution);
     document.getElementById('colorPicker').value = '#000000';
-    clickToPaint('#000000');
+    toolsFunction('brush', '#000000');
+    resetButtonsDisplay();
     brushButton.classList.add('pannelButtonPressed');
-    eraserButton.classList.remove('pannelButtonPressed');
-    rainbowBrushButton.classList.remove('pannelButtonPressed');
-    eyeDropper.classList.remove('pannelButtonPressed');
 });
 
 brushButton.addEventListener('click', function() {
     let brushColor = brushColorChoice.value;
-    clickToPaint(brushColor);
+    if(brushColor === '#ffffff') {
+        brushColor = '#000000';
+        brushColorChoice.value = brushColor;
+    }
+    toolsFunction('brush', brushColor);
+    resetButtonsDisplay();
     brushButton.classList.add('pannelButtonPressed');
-    eraserButton.classList.remove('pannelButtonPressed');
-    rainbowBrushButton.classList.remove('pannelButtonPressed');
-    eyeDropper.classList.remove('pannelButtonPressed');
-
 })
 
 eraserButton.addEventListener('click', function() {
-    pickEraser();
+    brushColorChoice.value = '#ffffff';
+    toolsFunction('eraser');
+    resetButtonsDisplay();
     eraserButton.classList.add('pannelButtonPressed');
-    brushButton.classList.remove('pannelButtonPressed');
-    rainbowBrushButton.classList.remove('pannelButtonPressed');
-    eyeDropper.classList.remove('pannelButtonPressed');
 })
 
 rainbowBrushButton.addEventListener('click', function() {
-    rainbowBrush();
+    toolsFunction('rainbow');
+    resetButtonsDisplay();
     rainbowBrushButton.classList.add('pannelButtonPressed');
-    eraserButton.classList.remove('pannelButtonPressed');
-    brushButton.classList.remove('pannelButtonPressed');
-    eyeDropper.classList.remove('pannelButtonPressed');
 })
 
 eyeDropper.addEventListener('click', () => {
-    eyeDrop();
-    rainbowBrush(0);
+    toolsFunction('eyeDropper');
+    resetButtonsDisplay();
     eyeDropper.classList.add('pannelButtonPressed');
-    brushButton.classList.remove('pannelButtonPressed');
-    eraserButton.classList.remove('pannelButtonPressed');
-    rainbowBrushButton.classList.remove('pannelButtonPressed');
 })

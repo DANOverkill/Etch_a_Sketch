@@ -21,7 +21,14 @@ let mode = 'brush';
 //Page Loding Logic 
 setCanvasresolution(resolution);
 appendPixels(resolution);
-toolsFunction('brush', '#000000');
+if(window.matchMedia("(pointer: coarse)").matches) {
+    toolsFunctionTch('brush', '#000000')
+}
+else {
+    toolsFunction('brush', '#000000')
+}
+
+// toolsFunction('brush', '#000000');
 brushButton.classList.add('pannelButtonPressed');
 
 function setCanvasresolution(resolution) {
@@ -54,6 +61,7 @@ function toolsFunction(mode, brushColor) {
     container.addEventListener('mouseup', function(){mouseIsDown = false})
     document.querySelectorAll('.canvasPixel').forEach(item => {
         item.addEventListener('mouseover', function() {
+            console.log('hovering');
             if(mode === 'brush') {
                 let hoverColor =  {
                 'background-color': `${brushColor}`
@@ -85,6 +93,7 @@ function toolsFunction(mode, brushColor) {
             }
         })
         item.addEventListener('click', function() {
+            console.log('click');
             if(mode === 'brush') {
                 let hoverColor =  {
                 'background-color': `${brushColorChoice.value}`
@@ -110,6 +119,80 @@ function toolsFunction(mode, brushColor) {
                 brushButton.classList.add('pannelButtonPressed');
                 return mode = 'brush';
             }
+        })
+    })
+}
+
+function toolsFunctionTch(mode, brushColor) {
+    let mouseIsDown = false
+    container.addEventListener('touchstart', function(){mouseIsDown = true})
+    container.addEventListener('touchend', function(){mouseIsDown = false})
+    document.querySelectorAll('.canvasPixel').forEach(item => {
+        item.addEventListener('touchmove', function() {
+            container.style.overflow = "hidden";
+            console.log('moving')
+            if(mode === 'brush') {
+                let hoverColor =  {
+                'background-color': `${brushColor}`
+                };
+                if(mouseIsDown) {
+                Object.assign(this.style, hoverColor);
+                }
+            }
+            if(mode === 'eraser') {
+                let hoverColor =  {
+                'background-color': '#ffffff'
+                };
+                if(mouseIsDown) {
+                Object.assign(this.style, hoverColor);
+                }
+            }
+            if(mode === 'rainbow') {
+                let rainbow = randomColor();
+                let hoverColor =  {
+                'background-color': `${rainbow}`
+                };
+                if(mouseIsDown) {
+                Object.assign(this.style, hoverColor);
+                }
+            }
+            if(mode === 'eyeDropper') {
+                rgbColor = this.style.backgroundColor;
+                document.getElementById('colorPicker').value = String(rgb2hex(rgbColor));
+            }
+        })
+        item.addEventListener('touchstart', function() {
+            console.log('touching');
+            container.style.overflow = "hidden";
+            if(mode === 'brush') {
+                let hoverColor =  {
+                'background-color': `${brushColorChoice.value}`
+                };
+                Object.assign(this.style, hoverColor);
+            }
+            if(mode === 'eraser') {
+                let hoverColor =  {
+                'background-color': `${brushColorChoice.value}`
+                };
+                Object.assign(this.style, hoverColor);
+            }
+            if(mode === 'rainbow') {
+                let rainbow = randomColor();
+                let hoverColor =  {
+                'background-color': `${brushColorChoice.value}`
+                };
+                Object.assign(this.style, hoverColor);
+            }
+            if(mode === 'eyeDropper') {
+                brushColor = brushColorChoice.value;
+                resetButtonsDisplay();
+                brushButton.classList.add('pannelButtonPressed');
+                return mode = 'brush';
+            }
+        })
+        item.addEventListener('touchend', function() {
+            console.log('stoptouching')
+            container.style.overflow = "auto";       
         })
     })
 }
@@ -157,6 +240,8 @@ function resetButtonsDisplay() {
     eyeDropper.classList.remove('pannelButtonPressed');
 }
 
+
+
 // Control Pannel Buttons
 resolutionButton.addEventListener('click', function() {
     resolution = parseInt(prompt('Please choose resolution up to a max of 100 pixels', 32));
@@ -175,7 +260,12 @@ resolutionButton.addEventListener('click', function() {
     console.log(resolution);
     setCanvasresolution(resolution);
     appendPixels(resolution);
-    toolsFunction('brush', '#000000');
+    if(window.matchMedia("(pointer: coarse)").matches) {
+        toolsFunctionTch('brush', '#000000')
+    }
+    else {
+        toolsFunction('brush', '#000000');
+    }
     resetButtonsDisplay();
     brushButton.classList.add('pannelButtonPressed');
 });
@@ -185,7 +275,12 @@ resetButton.addEventListener('click', function() {
     setCanvasresolution(resolution);
     appendPixels(resolution);
     document.getElementById('colorPicker').value = '#000000';
-    toolsFunction('brush', '#000000');
+    if(window.matchMedia("(pointer: coarse)").matches) {
+        toolsFunctionTch('brush', '#000000')
+    }
+    else {
+        toolsFunction('brush', '#000000');
+    }
     resetButtonsDisplay();
     brushButton.classList.add('pannelButtonPressed');
 });
@@ -196,26 +291,50 @@ brushButton.addEventListener('click', function() {
         brushColor = '#000000';
         brushColorChoice.value = brushColor;
     }
-    toolsFunction('brush', brushColor);
+    if(window.matchMedia("(pointer: coarse)").matches) {
+        toolsFunctionTch('brush', `${brushColorChoice.value}`)
+    }
+    else {
+        toolsFunction('brush', `${brushColorChoice.value}`);
+    }
+    //toolsFunction('brush', `${brushColorChoice.value}`);
     resetButtonsDisplay();
     brushButton.classList.add('pannelButtonPressed');
 })
 
 eraserButton.addEventListener('click', function() {
     brushColorChoice.value = '#ffffff';
-    toolsFunction('eraser');
+    if(window.matchMedia("(pointer: coarse)").matches) {
+        toolsFunctionTch('eraser')
+    }
+    else {
+        toolsFunction('eraser');
+    }
+    // toolsFunction('eraser');
     resetButtonsDisplay();
     eraserButton.classList.add('pannelButtonPressed');
 })
 
 rainbowBrushButton.addEventListener('click', function() {
+    if(window.matchMedia("(pointer: coarse)").matches) {
+        toolsFunctionTch('rainbow')
+    }
+    else {
+        toolsFunction('rainbow');
+    }
     toolsFunction('rainbow');
     resetButtonsDisplay();
     rainbowBrushButton.classList.add('pannelButtonPressed');
 })
 
 eyeDropper.addEventListener('click', () => {
-    toolsFunction('eyeDropper');
+    if(window.matchMedia("(pointer: coarse)").matches) {
+        toolsFunctionTch('eyeDropper')
+    }
+    else {
+        toolsFunction('eyeDropper');
+    }
+    // toolsFunction('eyeDropper');
     resetButtonsDisplay();
     eyeDropper.classList.add('pannelButtonPressed');
 })

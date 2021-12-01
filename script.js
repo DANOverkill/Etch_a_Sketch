@@ -159,7 +159,7 @@ function resetButtonsDisplay() {
 
 // Control Pannel Buttons
 resolutionButton.addEventListener('click', function() {
-    resolution = parseInt(prompt('Please choose resolution up to a max of 100 pixels', 16));
+    resolution = parseInt(prompt('Please choose resolution up to a max of 100 pixels', 32));
     console.log(resolution);
     if (resolution > 100) {
         resolution = 100;

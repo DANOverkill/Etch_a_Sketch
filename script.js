@@ -28,7 +28,6 @@ else {
     toolsFunction('brush', '#000000')
 }
 
-// toolsFunction('brush', '#000000');
 brushButton.classList.add('pannelButtonPressed');
 
 function setCanvasresolution(resolution) {
@@ -107,7 +106,6 @@ function toolsFunction(mode, brushColor) {
                 Object.assign(this.style, hoverColor);
             }
             if(mode === 'rainbow') {
-                let rainbow = randomColor();
                 let hoverColor =  {
                 'background-color': `${brushColorChoice.value}`
                 };
@@ -119,6 +117,9 @@ function toolsFunction(mode, brushColor) {
                 brushButton.classList.add('pannelButtonPressed');
                 return mode = 'brush';
             }
+        })
+        item.addEventListener('mouseup', () => {
+            return mouseIsDown = false;
         })
     })
 }
@@ -162,7 +163,7 @@ function toolsFunctionTch(mode, brushColor) {
             }
         })
         item.addEventListener('touchstart', function() {
-            console.log('touching');
+            console.log('clicked');
             container.style.overflow = "hidden";
             if(mode === 'brush') {
                 let hoverColor =  {
@@ -177,7 +178,6 @@ function toolsFunctionTch(mode, brushColor) {
                 Object.assign(this.style, hoverColor);
             }
             if(mode === 'rainbow') {
-                let rainbow = randomColor();
                 let hoverColor =  {
                 'background-color': `${brushColorChoice.value}`
                 };
@@ -209,7 +209,6 @@ function paintPixel(brushColor) {                                   //this funct
 }
 
 function changeColor() {
-    let brushColor = brushColorChoice.value;
     toolsFunction('brush', `${brushColorChoice.value}`),
     resetButtonsDisplay();
     brushButton.classList.add('pannelButtonPressed');
@@ -297,7 +296,6 @@ brushButton.addEventListener('click', function() {
     else {
         toolsFunction('brush', `${brushColorChoice.value}`);
     }
-    //toolsFunction('brush', `${brushColorChoice.value}`);
     resetButtonsDisplay();
     brushButton.classList.add('pannelButtonPressed');
 })
@@ -310,7 +308,6 @@ eraserButton.addEventListener('click', function() {
     else {
         toolsFunction('eraser');
     }
-    // toolsFunction('eraser');
     resetButtonsDisplay();
     eraserButton.classList.add('pannelButtonPressed');
 })
@@ -322,7 +319,6 @@ rainbowBrushButton.addEventListener('click', function() {
     else {
         toolsFunction('rainbow');
     }
-    toolsFunction('rainbow');
     resetButtonsDisplay();
     rainbowBrushButton.classList.add('pannelButtonPressed');
 })
@@ -334,7 +330,6 @@ eyeDropper.addEventListener('click', () => {
     else {
         toolsFunction('eyeDropper');
     }
-    // toolsFunction('eyeDropper');
     resetButtonsDisplay();
     eyeDropper.classList.add('pannelButtonPressed');
 })
